@@ -9,19 +9,14 @@ class BooksApp extends Component {
     state = {
         read: [],
         wantToRead: [],
-        currentlyReading: []
+        currentlyReading: [],
+        booksQueried: []
     }
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
             console.log(books)
         })
     }
-    searchBooks(query) {
-        BooksAPI.search('Linux').then((booksQueried) => {
-            return booksQueried
-        })
-    }
-
     render() {
         return (
             <div className="app">
@@ -29,11 +24,7 @@ class BooksApp extends Component {
                     <BookShelf />
                 )} />
                 <Route path="/search" render={() => (
-                    <SearchBooks
-                        onSearchBooks={(query) => {
-                            this.searchBooks(query)
-                        }}
-                    />
+                    <SearchBooks />
                 )} />
             </div>
         )

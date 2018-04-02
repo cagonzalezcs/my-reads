@@ -1,18 +1,57 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Book from './Book';
+import * as BooksAPI from '../utils/BooksAPI'
 
 class SearchBooks extends Component {
 	state = {
-		query: ''
+		query: '',
+		booksQueried: []
 	}
+	componentDidMount() {
+
+	}
+	/**
+	 * @description Updates Query Property of this Component's State
+     * 		uses callback function on setState to make an API through App.js
+     *		which will send an array of objects, queried using the search function from BooksAPI,
+     *		as a prop to SearchBooks Component
+     * @param query - Value set by user input which will be used to query objects within BooksAPI
+	 */
 	updateQuery = (query) => {
-		this.setState({ query: query })
+		this.setState({ query: query },
+		() => {
+			this.findBooks(this.state.query)
+		})
 	}
+	findBooks(query) {
+        if(query) {
+            BooksAPI.search(query).then( response => {
+                if(response.error) {
+                    this.setState( state => ({
+                        booksQueried: []
+                    }))
+                } else {
+                    this.setState( state => ({
+                        booksQueried: response
+                    }))
+                }
+                console.log(response)
+            })
+        } else {
+        	this.setState( state => ({
+            	booksQueried: []
+            }))
+        }
+    }
 	render() {
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
-					<Link to="/" className="close-search">Close</Link>
+					<Link
+						to="/"
+						className="close-search"
+					>Close</Link>
 					<div className="search-books-input-wrapper">
 						{/*
 						NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -30,7 +69,15 @@ class SearchBooks extends Component {
 					</div>
 				</div>
 				<div className="search-books-results">
-					<ol className="books-grid"></ol>
+					<ol className="books-grid">
+						{this.state.booksQueried.map((book) => (
+							<li key={book.id}>
+								<Book
+									book={ book }
+								/>
+							</li>
+						))}
+					</ol>
 				</div>
 			</div>
 		)
