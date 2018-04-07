@@ -26,10 +26,9 @@ class BooksApp extends Component {
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
             this.setState({ booksReferenced: books })
-            console.log(this.state.booksReferenced)
         })
     }
-    changeShelf(book, shelf) {
+    changeShelf = (book, shelf) => {
         BooksAPI.update(book, shelf).then((response) => {
             book.shelf = shelf;
             this.setState( state => ({
@@ -44,13 +43,14 @@ class BooksApp extends Component {
             <div className="app">
                 <Route exact path="/" render={() => (
                     <ListBooks
-                        bookShelves={this.bookShelves}
                         booksReferenced={this.state.booksReferenced}
+                        bookShelves={this.bookShelves}
                         changeShelf={this.changeShelf}
                     />
                 )} />
                 <Route path="/search" render={() => (
                     <SearchBooks
+                        booksReferenced={this.state.booksReferenced}
                         changeShelf={this.changeShelf}
                     />
                 )} />
