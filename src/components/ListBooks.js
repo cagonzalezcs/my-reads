@@ -11,7 +11,7 @@ class ListBooks extends Component {
           <h1>MyReads</h1>
         </div>
           <div className="list-books-content">
-            {bookShelves.map(bookShelf => (
+            {bookShelves.map( (bookShelf) => (
               <div key={bookShelf.id}>
                 <BookShelf
                   title={bookShelf.title}

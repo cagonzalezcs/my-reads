@@ -10,7 +10,7 @@ class BookShelf extends Component {
               <h2 className="bookshelf-title">{title}</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {booksReferenced.filter(book => book.shelf === bookShelf).map((book) => (
+                  {booksReferenced.filter( (book) => book.shelf === bookShelf).map( (book) => (
 					<li key={book.id}>
 						<Book
 							book={book}

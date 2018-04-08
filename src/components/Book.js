@@ -7,12 +7,15 @@ class Book extends Component {
 		return (
 			<div className="book">
 				<div className="book-top">
+					{
+						// Use a ternary operation to see if the book object referenced has a imageLink property set. If not, call a placeholder image link
+					 }
 					<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : 'http://via.placeholder.com/128x193'})` }}></div>
 					<div className="book-shelf-changer">
 						<select
 							defaultValue={book.shelf ? book.shelf :'none'}
 							onChange={
-								event => changeShelf(book, event.target.value)
+								(event) => changeShelf(book, event.target.value)
 							}
 							>
 							<option value="none" disabled>Move to...</option>
